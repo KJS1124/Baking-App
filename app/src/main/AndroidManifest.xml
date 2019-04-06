@@ -5,7 +5,7 @@
 
     <dist:module dist:instant="true" />
 
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -15,7 +15,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".RecipieStepActivity"></activity>
+        <activity android:name=".RecipeStepDescription"></activity>
+
+        <receiver android:name=".widgit.BakingAppWidgit">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/baking_app_widgit_info" />
+        </receiver>
+
+        <activity android:name=".RecipeStepActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

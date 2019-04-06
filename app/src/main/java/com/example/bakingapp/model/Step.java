@@ -1,22 +1,24 @@
 package com.example.bakingapp.model;
 
-class Step {
+import java.io.Serializable;
+
+public class Step implements Serializable {
     int id;
     String shortDescription;
-    String discription;
-    String video;
+    String description;
+    String videoURL;
 
-    public Step(String shortDescription, String discription, String video) {
+    public Step(String shortDescription, String description, String videoURL) {
         this.shortDescription = shortDescription;
-        this.discription = discription;
-        this.video = video;
+        this.description = description;
+        this.videoURL = videoURL;
     }
 
-    public Step(int id, String shortDescription, String discription, String video) {
+    public Step(int id, String shortDescription, String description, String videoURL) {
         this.id = id;
         this.shortDescription = shortDescription;
-        this.discription = discription;
-        this.video = video;
+        this.description = description;
+        this.videoURL = videoURL;
     }
 
     public int getId() {
@@ -35,20 +37,20 @@ class Step {
         this.shortDescription = shortDescription;
     }
 
-    public String getDiscription() {
-        return discription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDiscription(String discription) {
-        this.discription = discription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getVideo() {
-        return video;
+    public String getVideoURL() {
+        return videoURL;
     }
 
-    public void setVideo(String video) {
-        this.video = video;
+    public void setVideoURL(String videoURL) {
+        this.videoURL = videoURL;
     }
 
     @Override
@@ -56,8 +58,8 @@ class Step {
         return "Step{" +
                 "id=" + id +
                 ", shortDescription='" + shortDescription + '\'' +
-                ", discription='" + discription + '\'' +
-                ", video='" + video + '\'' +
+                ", description='" + description + '\'' +
+                ", videoURL='" + videoURL + '\'' +
                 '}';
     }
 }

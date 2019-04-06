@@ -13,12 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.bakingapp.MainActivity;
 import com.example.bakingapp.R;
 import com.example.bakingapp.adapter.RecipeListAdapter;
 import com.example.bakingapp.data.Data;
 import com.example.bakingapp.model.Recipe;
 import com.example.bakingapp.utils.ApiInterface;
 import com.example.bakingapp.utils.NetworkUtils;
+import com.example.bakingapp.utils.SimpleIdlingResource;
 
 import java.util.List;
 
@@ -28,7 +30,8 @@ import retrofit2.Response;
 
 public class RecipeListFragment extends Fragment implements RecipeListAdapter.RecipeListItemListner {
 
-    OnRecipeItemClickListner onRecipeItemClickListner;
+    SimpleIdlingResource idlingResource;
+    private OnRecipeItemClickListner onRecipeItemClickListner;
 
     public interface OnRecipeItemClickListner{
         void click(int id);
@@ -57,17 +60,24 @@ public class RecipeListFragment extends Fragment implements RecipeListAdapter.Re
         final RecipeListAdapter adapter = new RecipeListAdapter(this);
         mRecyclerView.setAdapter(adapter);
 
+        idlingResource = (SimpleIdlingResource) ((MainActivity) getActivity()).getIdlingResource();
+        if (idlingResource != null) {
+            idlingResource.setIdleState(false);
+        }
         NetworkUtils.getRetrofit().create(ApiInterface.class).getDetails().enqueue(new Callback<List<Recipe>>() {
             @Override
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
                 List<Recipe> recipies = response.body();
+                Data.setRecipies(recipies);
                 Log.i("data", "onResponse: "+ recipies);
                 adapter.setRecipeData(recipies);
+                idlingResource.setIdleState(true);
             }
 
             @Override
             public void onFailure(Call<List<Recipe>> call, Throwable t) {
                 Log.i("error", "onFailure: " + t.getMessage());
+                idlingResource.setIdleState(true);
             }
         });
 
