@@ -16,14 +16,16 @@ public class RecipeStepDescription extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_step_description);
 
-        Step step = (Step) getIntent().getSerializableExtra(INTENT_DATA_KEY);
+        if (savedInstanceState == null) {
+            Step step = (Step) getIntent().getSerializableExtra(INTENT_DATA_KEY);
 
-        RecipeDescription recipeDescription = RecipeDescription.newInstance(step);
+            RecipeDescription recipeDescription = RecipeDescription.newInstance(step);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .add(R.id.recipe_step_description_container, recipeDescription)
-                .commit();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .add(R.id.recipe_step_description_container, recipeDescription)
+                    .commit();
+        }
 
     }
 }
